@@ -1,2 +1,2 @@
-# ngx_http_rate_limit_module
+# ngx_http_rate_limit_request_module
 A rate limit module for Nginx
