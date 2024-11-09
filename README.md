@@ -25,8 +25,8 @@ location = /rate_limit {
 ```
 ## Directives
 ```
-Syntax:  auth_request uri | off;
-Default:  auth_request off;
+Syntax:  rate_limit_request uri | off;
+Default:  rate_limit_request off;
 Context:  http, server, location
 ```
 Enables rate limit functionality based on the result of a subrequest and sets the URI to which the subrequest will be sent.
