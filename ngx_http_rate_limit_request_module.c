@@ -100,7 +100,7 @@ static ngx_int_t ngx_http_rate_limit_request_handler(ngx_http_request_t *r) {
         }
 
         ngx_log_error(NGX_LOG_ERR, r->connection->log, 0,
-                      "auth request unexpected status: %ui", ctx->status);
+                      "rate limit request unexpected status: %ui", ctx->status);
 
         return NGX_HTTP_INTERNAL_SERVER_ERROR;
     }
@@ -139,7 +139,7 @@ static ngx_int_t ngx_http_rate_limit_request_handler(ngx_http_request_t *r) {
 static ngx_int_t ngx_http_rate_limit_request_done(ngx_http_request_t *r, void *data, ngx_int_t rc) {
     ngx_http_rate_limit_request_ctx_t *ctx = data;
 
-    ngx_log_error(NGX_LOG_ERR, r->connection->log, 0,
+    ngx_log_debug1(NGX_LOG_DEBUG_HTTP, r->connection->log, 0,
                    "rate limit request done s:%ui", r->headers_out.status);
 
     ctx->done = 1;
@@ -163,11 +163,7 @@ static char *ngx_http_rate_limit_request_merge_conf(ngx_conf_t *cf, void *parent
     ngx_http_rate_limit_request_conf_t *prev = parent;
     ngx_http_rate_limit_request_conf_t *conf = child;
 
-    ngx_log_error(NGX_LOG_ERR, cf->log, 0, "rate limit, ngx_http_rate_limit_request_merge_conf 0, conf->uri:%V, prev->uri:%V", &(conf->uri), &(prev->uri));
-
     ngx_conf_merge_str_value(conf->uri, prev->uri, "");
-
-    ngx_log_error(NGX_LOG_ERR, cf->log, 0, "rate limit, ngx_http_rate_limit_request_merge_conf 1, conf->uri:%V", &(conf->uri));
 
     return NGX_CONF_OK;
 }
@@ -184,8 +180,6 @@ static ngx_int_t ngx_http_rate_limit_request_init(ngx_conf_t *cf) {
     }
 
     *h = ngx_http_rate_limit_request_handler;
-
-    ngx_log_error(NGX_LOG_ERR, cf->log, 0, "rate limit, ngx_http_rate_limit_request_init");
 
     return NGX_OK;
 }
@@ -208,8 +202,6 @@ static char *ngx_http_rate_limit_request(ngx_conf_t *cf, ngx_command_t *cmd, voi
     }
 
     rlrcf->uri = value[1];
-
-    ngx_log_error(NGX_LOG_ERR, cf->log, 0, "rate limit, ngx_http_rate_limit_request");
 
     return NGX_CONF_OK;
 }
