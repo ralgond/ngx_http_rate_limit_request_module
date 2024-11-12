@@ -18,9 +18,14 @@ location / {
 location = /rate_limit {
     internal;
     proxy_pass ... # proxy_pass http://backend_ratelimit$request_uri
-    proxy_pass_request_body off;
-    proxy_set_header Content-Length "";
+    proxy_http_version 1.1;
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Real-Method $request_method;
     proxy_set_header X-Original-URI $request_uri;
+    proxy_set_header Content-Type "";
+    proxy_set_header Content-Length 0;
+    proxy_set_header Connection "keep-alive";
+    proxy_pass_request_body off;
 }
 ```
 ## Directives
