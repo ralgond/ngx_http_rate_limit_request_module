@@ -8,7 +8,7 @@ A rate limit module for Nginx
 
 The ```ngx_http_rate_limit_request_module``` module implements rate limit functionality based on the result of a subrequest. If the subrequest returns a 2xx response code, the access is allowed. If it returns 429 or 403, the access is denied with the corresponding error code. Any other response code returned by the subrequest is considered an error.
 
-It's a important component of this [service](https://github.com/ralgond/rate-limit-server)
+It's an important component of this [service](https://github.com/ralgond/rate-limit-server)
 
 ## Example Configuration
 ```bash
